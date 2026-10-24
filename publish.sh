@@ -30,9 +30,10 @@ echo "pushed: https://github.com/$LOGIN/opencode-console-mouse"
 UPSTREAM="RaphaelGF11/gpm2xterm"
 BRANCH="fix/console-selection-wheel-clipboard"
 WORK=$(mktemp -d); trap 'rm -rf "$WORK"' EXIT
+cd "$WORK"   # IMPORTANT: not inside $PROJ — 'gh repo fork --clone' creates ./gpm2xterm
 "$GH" repo fork "$UPSTREAM" --clone=true >/dev/null
 cd "$WORK/gpm2xterm"
-BASE=$("$GH" repo view "$UPSTREAM" --json defaultBranch --jq .defaultBranch)
+BASE=$("$GH" repo view "$UPSTREAM" --json defaultBranchRef --jq .defaultBranchRef.name)
 git checkout -q -b "$BRANCH"
 cp -f "$PROJ/gpm2xterm/gpm2xterm.c" gpm2xterm.c
 cp -f "$PROJ/gpm2xterm/fakeapp.c"   fakeapp.c
