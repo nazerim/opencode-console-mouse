@@ -1,0 +1,10 @@
+# build artifacts / fetched deps
+gpm2xterm/prefix/
+gpm2xterm/gpm2xterm
+gpm2xterm/fakeapp
+bpcheck
+*.deb
+*.log
+*.out
+# upstream original (not redistributing; fetch from upstream)
+gpm2xterm/upstream-*.c
