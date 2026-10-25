@@ -2,10 +2,12 @@
 
 You are likely in `/home/naz/Projects/opencode-console-mouse`, possibly the
 session that built this. Everything was verified on: **Ubuntu 26.04, kernel
-7.0.0, OpenCode v2.1.4 (OpenTUI/libghostty TUI), physical console (tty1,
-fbcon ~146×71), user `naz` (in sudo group, needs password — you cannot
-`sudo` non-interactively; ask the human to run root steps or paste the
-output).** GitHub: `nazerim` via `~/.local/bin/gh` (authenticated;
+7.0.0, OpenCode v2.1.4 (OpenTUI/libghostty TUI), physical console on a
+2560x1440 DP monitor (card2-DP-6), KMS fbcon, user `naz` (in sudo group,
+needs password — you cannot `sudo` non-interactively; ask the human to run
+root steps or paste the output).** Console geometry at handoff: font 8x16
+(Fixed/Uni2) = 320x90 cells, exact-height fit (no bottom margin — last row
+sits at the panel edge; see /etc/default/console-setup + `sudo setupcon`). GitHub: `nazerim` via `~/.local/bin/gh` (authenticated;
 `gh auth setup-git` done, so git pushes work from your shell tool).
 
 ## What this is (2 sentences)
