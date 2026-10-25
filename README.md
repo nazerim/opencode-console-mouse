@@ -15,12 +15,10 @@ clicks, drag-select, wheel, cross-tty copy (gpm), an OSC 52 clipboard with
 
 ## Status
 
-- [x] **Phase 1 — DONE & RUNNING**: `consolation` installed & enabled (drag-select,
-      copy, middle-click paste, wheel scroll, selection buffer shared across all
-      VTs). Side buttons mapped: `BTN_SIDE`=extend selection, `BTN_EXTRA`=paste.
-      See `setup-console-mouse.sh`. Clicks reach OpenCode via the kernel X10
-      path (OpenCode sends `ESC[?1000h`; consolation forwards press/release as
-      `ESC[M bxy`) — confirmed working by user.
+- [x] **Phase 0 — Session/machine setup**: this repo is also the working
+      directory of the OpenCode session that built all of it (moved here via
+      `session_move`). New agents: read `AGENTS.md` first.
+- [x] **Phase 1 — DONE (installed, currently disabled in favor of phase 2)**: `consolation` — libinput console mouse with side-button mapping (`BTN_SIDE`=extend selection, `BTN_EXTRA`=paste), console-wide select/copy/paste/wheel. Install via `setup-console-mouse.sh`; restore via `rollback-phase2.sh`.
 - [x] **Phase 2 — FULLY WORKING** (user-confirmed via `/tmp/oc2.log`):
       clicks `<0`, drag `<32`, hover `<35`, wheel `<64/<65` all injected
       correctly; OSC52 copies captured; `Ctrl+V -> injected 52 byte paste`
@@ -59,7 +57,7 @@ clicks, drag-select, wheel, cross-tty copy (gpm), an OSC 52 clipboard with
 ## Phase 2 details
 
 `gpm2xterm/gpm2xterm.c` — rewrite of upstream gpm2xterm:
-- SGR injection: press/release/drag(+32)/motion(35)/wheel(4/5) + modifiers.
+- SGR injection: press/release/drag(+32)/motion(35)/wheel(64/65) + modifiers.
 - OSC52 emulation: stores copies, answers `?` queries → OpenCode gets a
   working clipboard on the console.
 - XTGETTCAP: replies `Ms` capability → OpenCode marks osc52 supported.
