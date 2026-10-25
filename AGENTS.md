@@ -7,7 +7,13 @@ session that built this. Everything was verified on: **Ubuntu 26.04, kernel
 needs password — you cannot `sudo` non-interactively; ask the human to run
 root steps or paste the output).** Console geometry at handoff: font 8x16
 (Fixed/Uni2) = 320x90 cells, exact-height fit (no bottom margin — last row
-sits at the panel edge; see /etc/default/console-setup + `sudo setupcon`). GitHub: `nazerim` via `~/.local/bin/gh` (authenticated;
+sits at the panel edge; see /etc/default/console-setup + `sudo setupcon`).
+**FINAL FONT CHOICE: Terminus 11x22** (232x65 grid, 10px bottom slack,
+user's preference on the 32" panel). Gotcha: `setupcon --force` applies but
+does NOT rewrite the boot cache — must be `setupcon --force --save` (the
+cached scripts in /etc/console-setup are what boot replays).
+
+GitHub: `nazerim` via `~/.local/bin/gh` (authenticated;
 `gh auth setup-git` done, so git pushes work from your shell tool).
 
 ## What this is (2 sentences)
