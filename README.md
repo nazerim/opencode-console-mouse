@@ -117,6 +117,9 @@ clicks, drag-select, wheel, cross-tty copy (gpm), an OSC 52 clipboard with
 
 ## Files
 
+- `KNOWLEDGE.md` — **the distilled deep-dive**: console stack architecture,
+  mouse/clipboard/paste/keyboard/font internals, protocol tables, the bug
+  museum, and "what can never work on a VT". Read this before touching code.
 - `setup-console-mouse.sh` — phase-1 installer (consolation; alternative setup).
 - `setup-phase2.sh` — phase-2 installer (gpm + gpm2xterm + `oc` launcher).
 - `rollback-phase2.sh` — undo phase 2, back to consolation.

@@ -15,6 +15,13 @@ live but does NOT rewrite the boot cache — persist with `setupcon --force
 GitHub: `nazerim` via `~/.local/bin/gh` (authenticated;
 `gh auth setup-git` done, so git pushes work from your shell tool).
 
+## Read first
+
+`KNOWLEDGE.md` is the full technical deep-dive (console stack, mouse/
+clipboard/paste/font internals, protocol tables, the bug museum, what can
+never work on a VT). This file is the operational handoff; KNOWLEDGE.md is
+the "why". Don't change code without reading it.
+
 ## What this is (2 sentences)
 
 `gpm2xterm` wraps a TUI inside a pty and emulates the parts a graphical
