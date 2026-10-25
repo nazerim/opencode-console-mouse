@@ -3,15 +3,14 @@
 You are likely in `/home/naz/Projects/opencode-console-mouse`, possibly the
 session that built this. Everything was verified on: **Ubuntu 26.04, kernel
 7.0.0, OpenCode v2.1.4 (OpenTUI/libghostty TUI), physical console on a
-2560x1440 DP monitor (card2-DP-6), KMS fbcon, user `naz` (in sudo group,
-needs password — you cannot `sudo` non-interactively; ask the human to run
-root steps or paste the output).** Console geometry at handoff: font 8x16
-(Fixed/Uni2) = 320x90 cells, exact-height fit (no bottom margin — last row
-sits at the panel edge; see /etc/default/console-setup + `sudo setupcon`).
-**FINAL FONT CHOICE: Terminus 11x22** (232x65 grid, 10px bottom slack,
-user's preference on the 32" panel). Gotcha: `setupcon --force` applies but
-does NOT rewrite the boot cache — must be `setupcon --force --save` (the
-cached scripts in /etc/console-setup are what boot replays).
+2560x1440 DP monitor (32", card2-DP-6), KMS fbcon, user `naz` (in sudo
+group, needs password — you cannot `sudo` non-interactively; ask the human
+to run root steps or paste the output).** Console geometry: **Terminus
+11x22** bitmap font = 232x65 cells with 10px bottom slack (chosen over the
+compact Fixed 8x16 and other candidates; `/etc/default/console-setup` is the
+source of truth, applied via `setupcon`). Gotcha: `setupcon --force` applies
+live but does NOT rewrite the boot cache — persist with `setupcon --force
+--save` (the cached scripts under /etc/console-setup are what boot replays).
 
 GitHub: `nazerim` via `~/.local/bin/gh` (authenticated;
 `gh auth setup-git` done, so git pushes work from your shell tool).
