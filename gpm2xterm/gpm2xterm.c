@@ -177,16 +177,13 @@ static void forward_gpm_event(Gpm_Event *ev) {
                 track_button, track_cell, track_any);
     if (!(track_button || track_cell || track_any)) return;
 
-    /* Wheel first: gpm folds displacement into wdy (ms3: up = +1).
-     * xterm SGR convention (and what OpenTUI parses): wheel-up = 64,
-     * wheel-down = 65 (scroll bit), NOT 4/5 (those are legacy X10-only).
-     * A wheel event is not also a motion — don't fall through. */
+    /* Wheel: xterm SGR scroll-bit encoding (64=up, 65=down). Press-ONLY:
+     * a trailing '\e[<64m' release re-decodes as button-0 (64&3) in strict
+     * parsers (e.g. OpenTUI) and synthesizes a phantom left-CLICK at the
+     * cursor — which OpenCode treats as a toggle on collapsible blocks. */
     if (ev->wdy) {
-        if (track_button) {
-            int w = (ev->wdy > 0) ? 64 : 65;
-            send_sgr(w, ev->x, ev->y, 'M', ev->modifiers);
-            send_sgr(w, ev->x, ev->y, 'm', ev->modifiers);
-        }
+        if (track_button)
+            send_sgr(ev->wdy > 0 ? 64 : 65, ev->x, ev->y, 'M', ev->modifiers);
         return;
     }
 

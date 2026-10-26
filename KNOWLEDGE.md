@@ -127,7 +127,7 @@ return (defaultMask & GPM_HARD) ? res : 1;
 |---|---|---|
 | left/middle/right press | 0/1/2 | 0/1/2 `M` |
 | release | 3 | same-code `m` (or 3 in *X10* — SGR keeps the button!) |
-| **wheel up / down** | **4 / 5** | **64 / 65** ← (scroll bit 0x40) — NOT 4/5; SGR 4/5 decodes as left+release → apps see *clicks* |
+| **wheel up / down** | **4 / 5** | **64 / 65** ← (scroll bit 0x40) — NOT 4/5; SGR 4/5 decodes as left+release → apps see *clicks*. **Press-only**: a trailing `\e[<64;x;ym` re-decodes as `64&3=0`=left-release in strict parsers → pairs with the press into a *synthesized click at the cursor* (OpenCode toggled collapsible blocks per tick). Ghostty-class terminals send wheel as a press with no release. |
 | drag (cell motion, 1002) | n/a | 32+btn `M` |
 | any-motion (1003) | n/a | 35 `M` |
 | modifiers | +4 shift +8 meta +16 ctrl | same, ORed into b |
@@ -139,7 +139,7 @@ bridges rich app expectations to gpm events:
 
 ```
 gpm event: type∈{MOVE,DRAG,DOWN,UP}, buttons∈{4:L,2:M,1:R}, wdy=±1 (wheel!)
-SGR out:   DOWN→<b;…M   UP→<b;…m   DRAG→<b+32;…M   MOVE→<35;…M   wdy→<64/65;…M+m
+SGR out:   DOWN→<b;…M   UP→<b;…m   DRAG→<b+32;…M   MOVE→<35;…M   wdy→<64/65;…M (press only!)
 ```
 
 ## 5. Clipboard — three clipboards, none of them "the clipboard"
@@ -257,6 +257,13 @@ not a replacement.)
    rewrite `/etc/console-setup/cached_*`; `--save` is mandatory.
 8. Meta keys: raw console sends Alt as `ESC <key>` — fine — but `Ctrl+Alt+F`
    letters are VT switches; bind app scroll away from those.
+ 9. Wheel scrolled fine but each tick also **toggled collapsible blocks**
+    (thoughts/tools expanded-closed on their own) -> the trailing
+    `\e[<64;x;ym` release decoded as `64&3=0` = left-button-release, which
+    strict parsers (OpenTUI) pair with the press into a synthesized click at
+    the cursor. Fix: emit wheel as a **press-only** `\e[<64/65M` (as
+    Ghostty-class terminals do). Lesson: any "scroll-bit" event must not be
+    sent with an `m` release.
 
 ## 10. How to learn more than this document (read the sources)
 
