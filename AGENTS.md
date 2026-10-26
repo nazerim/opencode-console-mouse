@@ -141,6 +141,10 @@ re-author'd to the noreply identity.
 ## Files map
 
 README.md (deep findings + gotchas) · CHEATSHEET.md (usage tables) ·
+KNOWLEDGE.md (the "why") · regression-check.sh (25-invariant full-stack audit —
+run it after any change: daemons, deployed==committed-build md5 proof,
+static protocol asserts, headless OSC52/Ctrl+V regression, kernel ABI,
+per-tty geometry/modes, PR sync; exit 0 = healthy) ·
 gpm2xterm/ (source, build.sh, fakeapp.c) · setup-console-mouse.sh (phase 1) ·
 setup-phase2.sh / rollback-phase2.sh (deploy/undo, need sudo) · pr-upstream.sh
 (update PR) · publish.sh (one-shot publish+PR) · bpcheck.c (vt flags) ·
