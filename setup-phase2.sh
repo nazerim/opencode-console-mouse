@@ -22,7 +22,19 @@ EOF
 systemctl disable --now consolation
 systemctl enable --now gpm
 
-install -m 0755 "$PROJ/gpm2xterm/gpm2xterm" /usr/local/bin/gpm2xterm
+# build if artifact missing OR older than source (gitignored; build.sh needs no root)
+BIN="$PROJ/gpm2xterm/gpm2xterm"; SRC="$PROJ/gpm2xterm/gpm2xterm.c"
+{ [ -x "$BIN" ] && [ "$BIN" -nt "$SRC" ]; } || bash "$PROJ/gpm2xterm/build.sh"
+[ -x "$BIN" ] || { echo "ERROR: build produced no $BIN" >&2; exit 1; }
+chown "${SUDO_USER:-root}" "$BIN" 2>/dev/null || true
+
+install -m 0755 "$BIN" /usr/local/bin/gpm2xterm
+
+# guard: verify the deployed binary actually matches the repo's build
+BUILT=$(md5sum "$BIN" | cut -d' ' -f1)
+LIVE=$(md5sum /usr/local/bin/gpm2xterm | cut -d' ' -f1)
+[ "$BUILT" = "$LIVE" ] || { echo "ERROR: deployed binary mismatch ($LIVE != $BUILT)" >&2; exit 1; }
+echo "gpm2xterm installed: $LIVE"
 
 cat > /usr/local/bin/oc <<'EOF'
 #!/bin/sh
