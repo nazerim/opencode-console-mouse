@@ -41,7 +41,7 @@ printf '%s' "$SRC" | grep -q "track_bracket" && R PASS "bracketed-paste tracking
 
 # 5. headless behavioral regression (OSC52 store->query reply + Ctrl+V injection)
 gcc -O2 -w -o "$TMP/fakeapp" "$PROJ/gpm2xterm/fakeapp.c"
-( cd "$TMP" && { sleep 0.5; printf '\026'; sleep 1.2; } | TERM=linux "$TMP/gpm2xterm" "$TMP/fakeapp" </dev/null >/dev/null 2>&1 )
+( cd "$TMP" && { sleep 0.5; printf '\026'; sleep 1.2; } | TERM=linux "$TMP/gpm2xterm" "$TMP/fakeapp" >/dev/null 2>&1 )
 HEX=$(xxd -p "$TMP/resp.bin" 2>/dev/null | tr -d '\n')
 case "$HEX" in
   *1b5d3532*) case "$HEX" in *1b5b3230307e*68656c6c6f20776f726c64*1b5b3230317e*) R PASS "OSC52 reply + Ctrl+V paste" "roundtrip bytes OK";; *) R FAIL "paste injection" "no bracketed paste";; esac;;
