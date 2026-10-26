@@ -264,6 +264,12 @@ not a replacement.)
     the cursor. Fix: emit wheel as a **press-only** `\e[<64/65M` (as
     Ghostty-class terminals do). Lesson: any "scroll-bit" event must not be
     sent with an `m` release.
+10. "Applied the fix, restarted, *same bug*" → the deploy had silently kept
+    the **stale binary** (build artifact deleted/older than source; the
+    installer's `install` line no-op'd or errored mid-run). Fix procedure is
+    now mechanical: after every deploy verify `md5sum
+    /usr/local/bin/gpm2xterm gpm2xterm/gpm2xterm` match (setup-phase2.sh now
+    auto-builds on missing/stale artifact and aborts on hash mismatch).
 
 ## 10. How to learn more than this document (read the sources)
 

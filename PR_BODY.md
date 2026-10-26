@@ -24,7 +24,10 @@ happy to split this into smaller PRs if you prefer.
    emit SGR **64/65** (xterm's scroll-bit convention — what Ghostty-class
    parsers expect; note 4/5 is legacy-X10-only and decodes as
    button-1/2 press in SGR, which apps treat as clicks → double-click
-   selection spam).
+   selection spam) — and as a **press with no `m` release**: a trailing
+   `\e[<64m` re-decodes as `64&3=0` (left-release) in strict parsers
+   (observed with OpenTUI), pairing with the press into a phantom
+   synthesized *click* at the cursor.
 
 3. **DECSET detection used `strstr` over raw chunks**: broke on
    multi-parameter sets (`\e[?1000;1002;1006h`), sequences split across

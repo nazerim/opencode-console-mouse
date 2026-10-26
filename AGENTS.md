@@ -39,13 +39,17 @@ ls -l /usr/local/bin/gpm2xterm /usr/local/bin/oc /etc/gpm.conf
 git log --oneline -3
 ```
 
-At handoff time this repo's committed source and the deployed binary are the
-**same behavior**; the deployed binary predates a header-comment +
-`_XOPEN_SOURCE` touch-up. To re-sync (ask the human):
+Deployed binary now matches the committed source exactly (md5 `0542dd1…` on
+both `gpm2xterm/gpm2xterm` and `/usr/local/bin/gpm2xterm`, wheel press-only
+fix included).
+After any edit to `gpm2xterm/gpm2xterm.c`, re-deploy with (ask the human):
 
 ```
 ./gpm2xterm/build.sh && sudo ./setup-phase2.sh
 ```
+
+The script auto-rebuilds on missing/stale artifacts and aborts unless the
+installed md5 matches the build — trust its `gpm2xterm installed: <md5>` line.
 
 ## Day-to-day usage (the human's workflow)
 
